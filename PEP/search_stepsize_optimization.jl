@@ -5,8 +5,8 @@ using CSV, DataFrames
 include("sdp.jl")
 
 algos = [:AltGDA, :SimGDA]
-start_N = 50
-end_N = 50
+start_N = 5
+end_N = 30
 
 L = 1
 
@@ -65,10 +65,10 @@ for alg in algos
         end
 
         min_η_c_cur_state, max_η_c_cur_state = min_η_c, max_η_c
-        num_grid = 10
+        num_grid = 20
         grid_width = (max_η_c_cur_state - min_η_c_cur_state) / num_grid
         η, optimal_obj = 0.0, 0.0
-        while grid_width > 1e-5
+        while 1 / (L * min_η_c_cur_state) - 1 / (L * max_η_c_cur_state) > 1e-3
             η, optimal_obj = global_search_optimal_ηc(N, L, alg, min_η_c_cur_state, max_η_c_cur_state, :avg; num_search_points=num_grid)
             η_c = 1 / (η * L)
             min_η_c_cur_state, max_η_c_cur_state = η_c - grid_width, η_c + grid_width
