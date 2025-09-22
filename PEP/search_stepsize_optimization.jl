@@ -1,12 +1,9 @@
 using HDF5, JLD 
-using Plots
-using CSV, DataFrames
 
 include("sdp.jl")
 
 algos = [:AltGDA, :SimGDA]
-start_N = 5
-end_N = 30
+start_N, end_N = 41, 43  # inclusive bounds
 
 L = 1
 
@@ -27,6 +24,8 @@ function optimal_obj_ηc(N, L, alg, η_c, performance_measure)
         N, α_input, β_input, ϕ_input, ψ_input, (1, 0, 0, 0), D_x_input, D_u_input, R_x_input, R_u_input, L, q_input, ι_x_input, ι_u_input; 
         show_output=:off, radius_constr=:on, diam_constr=:off, simplex_specific_constraints=:off, minimize_printing=:on
     )
+
+    print("*")
 
     primal_obj_star, G_xv_star, G_uy_star, ν_star = sol_primal_with_known_stepsizes
 
@@ -59,7 +58,7 @@ for alg in algos
     # binary search for the optimal η_c
     for N in start_N:end_N
         if alg == :AltGDA
-            min_η_c, max_η_c = 0.5, 1.0  # subject to tuning
+            min_η_c, max_η_c = 0.7, 0.9  # subject to tuning
         elseif alg == :SimGDA
             min_η_c, max_η_c = 0.3, 6.0  # subject to tuning
         end
@@ -80,27 +79,13 @@ for alg in algos
         println("N: ", N, "; optimal η: ", η, "; optimal obj: ", optimal_obj)
     end
 
-    save("($alg).jld", "data", res)
-
-    # load the results and plot
-    record_res = load("($alg).jld")["data"]
-
-    scatter(record_res["N"], record_res["η"], label="optimal η", xscale=:log10, yscale=:log10, xlabel="N", ylabel="optimal η", title="optimal η vs N")
-    savefig("($alg)_optimal_η_vs_N.png")
-    scatter(record_res["N"], record_res["optimal_obj"], label="optimal obj", xscale=:log10, yscale=:log10, xlabel="N", ylabel="optimal obj", title="optimal obj vs N")
-    savefig("($alg)_optimal_obj_vs_N.png")
-
-    record_res = load("($alg).jld")["data"]
-    df = DataFrame(N=record_res["N"], optimal_η=record_res["η"], optimal_obj=record_res["optimal_obj"])
-    CSV.write("($alg)_results.csv", df)
+    # save results to the data folder in the current directory
+    current_dir = pwd()
+    if !isdir("$(current_dir)/PEP/data")
+        mkdir("$(current_dir)/PEP/data")
+    end
+    save("$(current_dir)/PEP/data/$(alg)_$(start_N)_$(end_N).jld", "data", res)
 
     println("*************************************************************************")
     println()
 end
-
-# Plot both optimal performance measure in one plot
-record_res_AltGDA = load("(AltGDA).jld")["data"]
-record_res_SimGDA = load("(SimGDA).jld")["data"]
-scatter(record_res_AltGDA["N"], record_res_AltGDA["optimal_obj"], label="AltGDA", xscale=:log10, yscale=:log10, xlabel="N", ylabel="optimal obj", title="optimal obj vs N")
-scatter!(record_res_SimGDA["N"], record_res_SimGDA["optimal_obj"], label="SimGDA")
-savefig("Both_optimal_obj_vs_N.png")
