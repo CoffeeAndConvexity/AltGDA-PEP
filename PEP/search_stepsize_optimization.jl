@@ -3,7 +3,7 @@ using HDF5, JLD
 include("sdp.jl")
 
 algos = [:AltGDA, :SimGDA]
-start_N, end_N = 41, 43  # inclusive bounds
+start_N, end_N = 49, 50  # inclusive bounds
 
 L = 1
 
