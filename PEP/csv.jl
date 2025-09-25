@@ -9,7 +9,7 @@ println("$(current_dir)")
 
 for alg in [:AltGDA, :SimGDA]
     df_combined = DataFrame()
-    for subset_N in [5:30, 31:35, 36:40, 41:43]
+    for subset_N in [5:30, 31:35, 36:40, 41:43, 44:46, 47:48, 49:50]
         record_res = load("$(current_dir)/$(alg)_$(first(subset_N))_$(last(subset_N)).jld")["data"]
         df = DataFrame(N=record_res["N"], optimal_η=record_res["η"], optimal_obj=record_res["optimal_obj"])
         append!(df_combined, df)

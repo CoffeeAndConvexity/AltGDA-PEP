@@ -4,7 +4,7 @@ using CSV, DataFrames, CSVFiles
 
 
 # Plot both optimal performance measure in one plot
-start_N, end_N = 5, 35  # inclusive bounds
+start_N, end_N = 5, 50  # inclusive bounds
 current_dir = pwd()
 if current_dir[end-8:end] ≠ "/PEP/data"
     current_dir = current_dir * "/PEP/data"
