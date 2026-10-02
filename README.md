@@ -114,3 +114,18 @@ Rerunning scripts can overwrite the bundled results and figures. The CSV
 conversion script expects the seven saved iteration batches covering 5–50;
 adjust its batch list if you use a different partition. Full step-size searches
 involve many SDP solves and can take substantial time.
+
+## Citation
+
+If you use this code in your research, please cite our
+[ICLR 2026 paper](https://arxiv.org/abs/2510.03855):
+
+```bibtex
+@inproceedings{nan2026altgda,
+  title     = {On the {$O(1/T)$} Convergence of Alternating Gradient Descent-Ascent in Bilinear Games},
+  author    = {Nan, Tianlong and Das Gupta, Shuvomoy and Iyengar, Garud and Kroer, Christian},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2026},
+  url       = {https://openreview.net/forum?id=iBC8CGNGAS}
+}
+```
