@@ -121,11 +121,12 @@ If you use this code in your research, please cite our
 [ICLR 2026 paper](https://arxiv.org/abs/2510.03855):
 
 ```bibtex
-@inproceedings{nan2026altgda,
-  title     = {On the {$O(1/T)$} Convergence of Alternating Gradient Descent-Ascent in Bilinear Games},
-  author    = {Nan, Tianlong and Das Gupta, Shuvomoy and Iyengar, Garud and Kroer, Christian},
-  booktitle = {International Conference on Learning Representations},
-  year      = {2026},
-  url       = {https://openreview.net/forum?id=iBC8CGNGAS}
+@inproceedings{nan2026onconvergence,
+  title={On the $ O (1/T) $ Convergence of Alternating Gradient Descent--Ascent in Bilinear Games},
+  author={Nan, Tianlong and Das Gupta, Shuvomoy and Iyengar, Garud and Kroer, Christian},
+  booktitle={International Conference on Learning Representations},
+  volume={2026},
+  pages={79281--79320},
+  year={2026}
 }
 ```
